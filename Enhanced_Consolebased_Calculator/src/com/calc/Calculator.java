@@ -1,0 +1,350 @@
+package com.calc;
+import java.util.Scanner;
+
+public class Calculator {
+    static Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        int choice;
+        do {
+            System.out.println("\n====== ENHANCED CONSOLE CALCULATOR ======");
+            System.out.println("1. Basic Arithmetic");
+            System.out.println("2. Scientific Operations");
+            System.out.println("3. Unit Conversions");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    basicArithmetic();
+                    break;
+                case 2:
+                    scientificOperations();
+                    break;
+                case 3:
+                    unitConversion();
+                    break;
+                case 4:
+                    System.out.println("Thank you for using the Calculator!");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Try again.");
+            }
+        } while (choice != 4);
+    }
+
+    //Arithmetic operations
+    public static void basicArithmetic() {
+        System.out.println("\n--- Basic Arithmetic ---");
+        System.out.println("1. Addition");
+        System.out.println("2. Subtraction");
+        System.out.println("3. Multiplication");
+        System.out.println("4. Division");
+        System.out.print("Choose operation: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter first number: ");
+        double a = sc.nextDouble();
+        System.out.print("Enter second number: ");
+        double b = sc.nextDouble();
+
+        switch (choice) {
+            case 1:
+                System.out.println("Result: "+(a + b));
+                break;
+            case 2:
+                System.out.println("Result: "+(a - b));
+                break;
+            case 3:
+                System.out.println("Result: "+(a * b));
+                break;
+            case 4:
+                if (b != 0)
+                    System.out.println("Result: "+(a / b));
+                else
+                    System.out.println("Error: Division by zero!");
+                break;
+            default:
+                System.out.println("Invalid operation!");
+        }
+    }
+
+    //Scientific operations 
+    public static void scientificOperations() {
+        System.out.println("\n--- Scientific Operations ---");
+        System.out.println("1. Square Root");
+        System.out.println("2. Power");
+        System.out.println("3. Logarithm (base 10)");
+        System.out.println("4. Sine");
+        System.out.println("5. Cosine");
+        System.out.println("6. Tangent");
+        System.out.println("7. Factorial");
+        System.out.println("8. Cube Root");
+        System.out.println("9. Exponential (e^x)");
+        System.out.println("10. Natural Log (ln)");
+        System.out.println("11. Degree to Radian");
+        System.out.println("12. Radian to Degree");
+        System.out.println("13. Absolute Value");
+        System.out.print("Choose operation: ");
+
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.print("Enter number: ");
+                double num = sc.nextDouble();
+                System.out.println("√" + num + " = " + Math.sqrt(num));
+                break;
+            case 2:
+                System.out.print("Enter base: ");
+                double base = sc.nextDouble();
+                System.out.print("Enter exponent: ");
+                double exp = sc.nextDouble();
+                System.out.println("Result: " + Math.pow(base, exp));
+                break;
+            case 3:
+                System.out.print("Enter number: ");
+                double n = sc.nextDouble();
+                System.out.println("Log10(" + n + ") = " + Math.log10(n));
+                break;
+            case 4:
+                System.out.print("Enter angle in degrees: ");
+                double angle = Math.toRadians(sc.nextDouble());
+                System.out.println("sin = " + Math.sin(angle));
+                break;
+            case 5:
+                System.out.print("Enter angle in degrees: ");
+                angle = Math.toRadians(sc.nextDouble());
+                System.out.println("cos = " + Math.cos(angle));
+                break;
+            case 6:
+                System.out.print("Enter angle in degrees: ");
+                angle = Math.toRadians(sc.nextDouble());
+                System.out.println("tan = " + Math.tan(angle));
+                break;
+            case 7:
+                System.out.print("Enter number: ");
+                int factNum = sc.nextInt();
+                System.out.println(factNum + "! = " + factorial(factNum));
+                break;
+            case 8:
+                System.out.print("Enter number: ");
+                num = sc.nextDouble();
+                System.out.println("∛" + num + " = " + Math.cbrt(num));
+                break;
+            case 9:
+                System.out.print("Enter x: ");
+                num = sc.nextDouble();
+                System.out.println("e^" + num + " = " + Math.exp(num));
+                break;
+            case 10:
+                System.out.print("Enter number: ");
+                num = sc.nextDouble();
+                System.out.println("ln(" + num + ") = " + Math.log(num));
+                break;
+            case 11:
+                System.out.print("Enter degrees: ");
+                double deg = sc.nextDouble();
+                System.out.println("Radians: " + Math.toRadians(deg));
+                break;
+            case 12:
+                System.out.print("Enter radians: ");
+                double rad = sc.nextDouble();
+                System.out.println("Degrees: " + Math.toDegrees(rad));
+                break;
+            case 13:
+                System.out.print("Enter number: ");
+                num = sc.nextDouble();
+                System.out.println("|" + num + "| = " + Math.abs(num));
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    public static long factorial(int n) {
+        if (n < 0)
+            return -1;
+        long fact = 1;
+        for (int i = 1; i <= n; i++)
+            fact *= i;
+        return fact;
+    }
+
+    // Unit Conversion
+    public static void unitConversion() {
+        System.out.println("\n--- Unit Conversion ---");
+        System.out.println("1. Temperature");
+        System.out.println("2. Currency");
+        System.out.println("3. Weight");
+        System.out.println("4. Length");
+        System.out.println("5. Time");
+        System.out.println("6. Speed");
+        System.out.print("Choose category: ");
+
+        int choice = sc.nextInt();
+
+        switch (choice) {
+            case 1:
+                temperatureConversion();
+                break;
+            case 2:
+                currencyConversion();
+                break;
+            case 3:
+                weightConversion();
+                break;
+            case 4:
+                lengthConversion();
+                break;
+            case 5:
+                timeConversion();
+                break;
+            case 6:
+                speedConversion();
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    // Temperature Conversion
+    public static void temperatureConversion() {
+        System.out.println("1. Celsius to Fahrenheit\n2. Fahrenheit to Celsius\n3. Celsius to Kelvin\n4. Kelvin to Celsius");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter temperature: ");
+        double t = sc.nextDouble();
+
+        switch (ch) {
+            case 1:
+                System.out.println("Result: " + ((t * 9 / 5) + 32) + " °F");
+                break;
+            case 2:
+                System.out.println("Result: " + ((t - 32) * 5 / 9) + " °C");
+                break;
+            case 3:
+                System.out.println("Result: " + (t + 273.15) + " K");
+                break;
+            case 4:
+                System.out.println("Result: " + (t - 273.15) + " °C");
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    // Currency Conversion
+    public static void currencyConversion() {
+        System.out.println("1. USD to INR\n2. INR to USD");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        double amt = sc.nextDouble();
+
+        double rate = 83.0; // example fixed rate
+        switch (ch) {
+            case 1:
+                System.out.println("Result: ₹" + (amt * rate));
+                break;
+            case 2:
+                System.out.println("Result: $" + (amt / rate));
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    // Weight Conversion
+    public static void weightConversion() {
+        System.out.println("1. Kilograms to Pounds\n2. Pounds to Kilograms");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter weight: ");
+        double w = sc.nextDouble();
+
+        switch (ch) {
+            case 1:
+                System.out.println("Result: " + (w * 2.20462) + " lb");
+                break;
+            case 2:
+                System.out.println("Result: " + (w / 2.20462) + " kg");
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    // Length Conversion 
+    public static void lengthConversion() {
+        System.out.println("1. Centimeters to Inches\n2. Inches to Centimeters\n3. Meters to Feet\n4. Feet to Meters");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter length: ");
+        double l = sc.nextDouble();
+
+        switch (ch) {
+            case 1:
+                System.out.println("Result: " + (l / 2.54) + " in");
+                break;
+            case 2:
+                System.out.println("Result: " + (l * 2.54) + " cm");
+                break;
+            case 3:
+                System.out.println("Result: " + (l * 3.28084) + " ft");
+                break;
+            case 4:
+                System.out.println("Result: " + (l / 3.28084) + " m");
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    // Time Conversion
+    public static void timeConversion() {
+        System.out.println("1. Seconds to Minutes\n2. Minutes to Hours\n3. Hours to Minutes\n4. Minutes to Seconds");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter time: ");
+        double t = sc.nextDouble();
+
+        switch (ch) {
+            case 1:
+                System.out.println("Result: " + (t / 60) + " min");
+                break;
+            case 2:
+                System.out.println("Result: " + (t / 60) + " hr");
+                break;
+            case 3:
+                System.out.println("Result: " + (t * 60) + " min");
+                break;
+            case 4:
+                System.out.println("Result: " + (t * 60) + " sec");
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+
+    //Speed Conversion
+    public static void speedConversion() {
+        System.out.println("1. km/h to m/s\n2. m/s to km/h");
+        int ch = sc.nextInt();
+
+        System.out.print("Enter speed: ");
+        double s = sc.nextDouble();
+
+        switch (ch) {
+            case 1:
+                System.out.println("Result: " + (s / 3.6) + " m/s");
+                break;
+            case 2:
+                System.out.println("Result: " + (s * 3.6) + " km/h");
+                break;
+            default:
+                System.out.println("Invalid choice!");
+        }
+    }
+}
+

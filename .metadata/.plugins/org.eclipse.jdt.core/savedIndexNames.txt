@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+/home/rguktrkvalley/Downloads/ShadowFox/.metadata/.plugins/org.eclipse.jdt.core
+2198471182.index
+1865797976.index
+3734872018.index

@@ -1,0 +1,199 @@
+package com.contact;
+
+import java.util.*;
+
+public class Contact_System {
+    private static final String RESET = "\u001B[0m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String RED = "\u001B[31m";
+    private static final String BLUE = "\u001B[34m";
+    private static final String PURPLE = "\u001B[35m";
+
+    private static final List<Contact> contacts = new ArrayList<>();
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        System.out.println(PURPLE + "\n✨ Welcome to Smart Contact Manager ✨" + RESET);
+        System.out.println("Your digital address book — always ready to help!\n");
+
+        int choice;
+        do {
+            System.out.println(CYAN + "========= Main Menu =========" + RESET);
+            System.out.println("1️⃣  Add New Contact");
+            System.out.println("2️⃣  View All Contacts");
+            System.out.println("3️⃣  Search Contact");
+            System.out.println("4️⃣  Update Contact");
+            System.out.println("5️⃣  Delete Contact");
+            System.out.println("6️⃣  Exit");
+            System.out.println(CYAN + "=============================" + RESET);
+            System.out.print(YELLOW + "Choose an option (1–6): " + RESET);
+
+            while (!sc.hasNextInt()) {
+                System.out.print(RED + "⚠️ Please enter a valid number: " + RESET);
+                sc.next();
+            }
+
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1 -> addContact();
+                case 2 -> viewContacts();
+                case 3 -> searchContact();
+                case 4 -> updateContact();
+                case 5 -> deleteContact();
+                case 6 -> System.out.println(GREEN + "\n👋 Thank you for using Smart Contact Manager!" + RESET);
+                default -> System.out.println(RED + "❌ Invalid option, try again!" + RESET);
+            }
+        } while (choice != 6);
+    }
+
+    // Add new contact
+    private static void addContact() {
+        System.out.println(BLUE + "\n📇 Add New Contact" + RESET);
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine().trim();
+
+        System.out.print("Enter Phone Number: ");
+        String phone = sc.nextLine().trim();
+
+        System.out.print("Enter Email: ");
+        String email = sc.nextLine().trim();
+
+        if (name.isEmpty() || phone.isEmpty()) {
+            System.out.println(RED + "⚠️ Name and Phone Number are required!" + RESET);
+            return;
+        }
+
+        contacts.add(new Contact(name, phone, email));
+        System.out.println(GREEN + "✅ Contact added successfully!" + RESET);
+    }
+
+    // View all contacts
+    private static void viewContacts() {
+        System.out.println(PURPLE + "\n📖 Your Contacts" + RESET);
+
+        if (contacts.isEmpty()) {
+            System.out.println(RED + "No contacts found. Try adding some!" + RESET);
+            return;
+        }
+
+        int index = 1;
+        for (Contact c : contacts) {
+            System.out.println(index++ + ". " + c);
+        }
+    }
+
+    // Search contact by name
+    private static void searchContact() {
+        System.out.print(BLUE + "\n🔍 Enter name to search: " + RESET);
+        String name = sc.nextLine().trim();
+
+        List<Contact> results = new ArrayList<>();
+        for (Contact c : contacts) {
+            if (c.getName().toLowerCase().contains(name.toLowerCase())) {
+                results.add(c);
+            }
+        }
+
+        if (results.isEmpty()) {
+            System.out.println(RED + "❌ No contacts found with that name!" + RESET);
+        } else {
+            System.out.println(GREEN + "✅ Found " + results.size() + " match(es):" + RESET);
+            for (Contact c : results) {
+                System.out.println("👉 " + c);
+            }
+        }
+    }
+
+    //  Update contact
+    private static void updateContact() {
+        System.out.print(BLUE + "\n✏️ Enter name of contact to update: " + RESET);
+        String name = sc.nextLine().trim();
+
+        Contact contact = findContactByName(name);
+        if (contact == null) {
+            System.out.println(RED + "❌ Contact not found!" + RESET);
+            return;
+        }
+
+        System.out.println(YELLOW + "Leave blank to keep existing value." + RESET);
+        System.out.print("New Name (" + contact.getName() + "): ");
+        String newName = sc.nextLine().trim();
+        if (!newName.isEmpty()) contact.setName(newName);
+
+        System.out.print("New Phone (" + contact.getPhone() + "): ");
+        String newPhone = sc.nextLine().trim();
+        if (!newPhone.isEmpty()) contact.setPhone(newPhone);
+
+        System.out.print("New Email (" + contact.getEmail() + "): ");
+        String newEmail = sc.nextLine().trim();
+        if (!newEmail.isEmpty()) contact.setEmail(newEmail);
+
+        System.out.println(GREEN + "✅ Contact updated successfully!" + RESET);
+    }
+
+    // Delete contact
+    private static void deleteContact() {
+        System.out.print(RED + "\n🗑️ Enter name of contact to delete: " + RESET);
+        String name = sc.nextLine().trim();
+
+        Contact contact = findContactByName(name);
+        if (contact == null) {
+            System.out.println(RED + "❌ Contact not found!" + RESET);
+            return;
+        }
+
+        System.out.print(YELLOW + "Are you sure you want to delete " + contact.getName() + "? (y/n): " + RESET);
+        String confirm = sc.nextLine().trim().toLowerCase();
+
+        if (confirm.equals("y")) {
+            contacts.remove(contact);
+            System.out.println(GREEN + "🗑️ Contact deleted successfully!" + RESET);
+        } else {
+            System.out.println(BLUE + "❎ Deletion cancelled." + RESET);
+        }
+    }
+
+    //Helper function to find a contact
+    private static Contact findContactByName(String name) {
+        for (Contact c : contacts) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+}
+
+/**
+ * 👤 Contact Class (Blueprint)
+ */
+class Contact {
+    private String name;
+    private String phone;
+    private String email;
+
+    public Contact(String name, String phone, String email) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    // Getters & Setters
+    public String getName() { return name; }
+    public String getPhone() { return phone; }
+    public String getEmail() { return email; }
+
+    public void setName(String name) { this.name = name; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public void setEmail(String email) { this.email = email; }
+
+    @Override
+    public String toString() {
+        return "👤 " + name + " | 📞 " + phone + (email.isEmpty() ? "" : " | ✉️ " + email);
+    }
+}
+
